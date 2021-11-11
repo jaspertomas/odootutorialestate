@@ -4,6 +4,13 @@ from odoo import models, fields, api
 from datetime import date
 from dateutil.relativedelta import relativedelta
 
+class EstatePropertyType(models.Model):
+    _name = "estate.property.type"
+    _description = 'estate.property.type'
+
+    name = fields.Char(required=True)
+    description = fields.Text()
+
 class EstateProperty(models.Model):
     _name = "estate.property"
     _description = 'estate.property'
@@ -26,5 +33,6 @@ class EstateProperty(models.Model):
     garden_area = fields.Integer()
     garden_orientation = fields.Char()
     active = fields.Boolean()
+    property_type_id = fields.Many2one("estate.property.type", string="Property Type")
 
 
