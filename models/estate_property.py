@@ -4,6 +4,15 @@ from odoo import models, fields, api
 from datetime import date
 from dateutil.relativedelta import relativedelta
 
+class EstatePropertyOffer(models.Model):
+    _name = "estate.property.offer"
+    _description = 'estate.property.offer'
+
+    price = fields.Float()
+    status = fields.Selection([("A", "Accepted"), ("R", "Refused")],copy=False)
+    buyer_id = fields.Many2one("res.partner", string="Buyer")
+    property_id = fields.Many2one("estate.property", string="Property")
+
 class EstatePropertyTag(models.Model):
     _name = "estate.property.tag"
     _description = 'estate.property.tag'
@@ -43,4 +52,4 @@ class EstateProperty(models.Model):
     buyer_id = fields.Many2one("res.partner", string="Buyer")
     salesman_id = fields.Many2one("res.users", string="Salesman",default=lambda self: self.env.uid, copy=False)
     tag_ids = fields.Many2many("estate.property.tag", string="Tags")
-
+    offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")
